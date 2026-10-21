@@ -1,6 +1,6 @@
 # IAM Labs: Keycloak, midPoint, LDAP, Entra ID
 
-Seven hands-on Identity & Access Management labs from the **IAM Fundamentals** course at EPITA (2026). Each lab ran locally in Docker. The lab environments and instructions were provided by the course. The screenshots, observations and notes in this repo are my own.
+Seven Identity & Access Management labs from the **IAM Fundamentals** course at EPITA (2026). Each lab ran locally in Docker. The lab environments and instructions were provided by the course. The screenshots, observations and notes in this repo are my own.
 
 ## What's covered
 
@@ -31,11 +31,11 @@ HR (CSV) ──► midPoint (IGA) ──► OpenLDAP ──► Nextcloud / apps
 
 ## Security takeaways
 
-- **Separate the jobs.** IGA decides access, the directory stores it, the access manager authenticates, and the app enforces. Mixing them is how orphaned and over-privileged accounts appear.
-- **Leaver speed is a security control.** The lab showed that disabling a user in midPoint cut their app access through an LDAP filter, without waiting for HR.
-- **MFA without lockout is half a control.** With brute-force detection off, no number of wrong OTPs locked the account. With it on, the account locked after 3 failures and Keycloak logged `LOGIN_ERROR` events.
-- **SoD has three modes:** block the request, require approval, or remove the old conflicting role (prune). Each fits a different risk level.
-- **Audit logs answer "who granted this?"** The midPoint audit log showed which approver granted which role to whom, and when.
+- The four jobs stay separate: IGA decides access, the directory stores it, the access manager authenticates, and the app enforces. Mixing them is how orphaned and over-privileged accounts appear.
+- Disabling a user in midPoint cut their app access immediately through an LDAP filter, without waiting for the HR feed. How fast a leaver is cut off is itself a control.
+- MFA on its own did not stop guessing. With brute-force detection off, no number of wrong OTPs locked the account. With it on, the account locked after 3 failures and Keycloak logged `LOGIN_ERROR` events.
+- Segregation of Duties has three modes: block the request, require approval, or remove the old conflicting role (prune). Each fits a different risk level.
+- The midPoint audit log answers who granted an access: which approver granted which role to whom, and when.
 
 ## Identity attacks these controls address
 
